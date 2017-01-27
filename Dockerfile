@@ -47,10 +47,12 @@ RUN wget -q https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-x86_64.s
     rm /tmp/miniconda.sh
 ENV PATH=/opt/conda/bin:$PATH
 
+ADD bootstrap.sh /src/bootstrap/bootstrap.sh
+RUN /src/bootstrap/bootstrap.sh
+
 ADD . /src/jupyterhub
 WORKDIR /src/jupyterhub
 
-RUN bootstrap.sh
 RUN python setup.py js && pip install . && \
     rm -rf $PWD ~/.cache ~/.npm
 
